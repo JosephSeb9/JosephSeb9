@@ -1,0 +1,144 @@
+/* src/App.css */
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: black;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 0;
+}
+
+.container {
+  display: flex;
+  width: 90%;
+  height: 80%;
+  border: 2px solid black;
+  background-color: white;
+  margin-top: 80px; /* Adjust to make space for the header */
+}
+
+.separator {
+  width: 10px; /* Adjust the width of the separator as needed */
+  background-color: black;
+}
+
+.pdf-viewer-container,
+.kpi-list-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow: hidden; /* Prevent scrolling up */
+}
+
+.pdf-viewer-container h2,
+.kpi-list-container h2 {
+  margin: 0 0 10px 0;
+  padding: 10px;
+  background-color: #282c34;
+  color: white;
+  text-align: center;
+}
+
+.pdf-viewer {
+  flex: 1;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto; /* Allow scrolling within the container */
+}
+
+.kpi-list {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+.kpi-list div {
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.kpi-list div:nth-child(1) {
+  background-color: #4caf50; /* Green */
+  color: #fff;
+}
+
+.kpi-list div:nth-child(2) {
+  background-color: #ffeb3b; /* Yellow */
+  color: #000;
+}
+
+.kpi-list div:nth-child(3) {
+  background-color: #2196f3; /* Blue */
+  color: #fff;
+}
+
+.kpi-list div:nth-child(4) {
+  background-color: #ff5722; /* Orange */
+  color: #fff;
+}
+
+.kpi-list div:nth-child(5) {
+  background-color: #9c27b0; /* Purple */
+  color: #fff;
+}
+
+.kpi-list div:hover {
+  background-color: inherit; /* Keep the original background color */
+  color: inherit; /* Keep the original font color */
+}
+
+.kpi-list div:active {
+  background-color: inherit; /* Keep the original background color */
+}
+
+.kpi-list .selected {
+  animation: blink-bg 1s step-start infinite;
+}
+
+@keyframes blink-bg {
+  50% {
+    background-color: transparent;
+  }
+}
+
+.kpi-list .not-selected {
+  background-color: inherit; /* Keep the original background color */
+  color: inherit; /* Keep the original font color */
+}
+
+.pdf-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.pdf-controls button {
+  margin: 0 5px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
