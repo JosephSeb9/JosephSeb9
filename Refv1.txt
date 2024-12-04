@@ -8,6 +8,8 @@ from flask import Flask, jsonify, send_from_directory
 import warnings
 from PIL import Image
 
+
+
 # Increase the limit for image pixels
 Image.MAX_IMAGE_PIXELS = None
 

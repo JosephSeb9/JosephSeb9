@@ -4,7 +4,7 @@ import pytesseract
 from PIL import Image
 import io
 import json
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, request
 import warnings
 
 # Increase the limit for image pixels
@@ -61,7 +61,8 @@ def map_json_objects(questions_file, results_file):
             mapped_kpis.append({
                 'kpi_id': kpi_id,
                 'name': questions["KPIs"][kpi_id],
-                'source': f"{filename}:{page}"
+                'source': f"{filename}:{page}",
+                'summary': result.get('summary', '')  # Include the summary content
             })
 
     return mapped_kpis
@@ -72,6 +73,22 @@ def get_kpis():
     results_file = r"C:\Sebastian\Projects\Morgen Stanley\readPDF\readPDFApp\kpis\results.json"
     mapped_kpis = map_json_objects(questions_file, results_file)
     return jsonify(mapped_kpis)
+
+@app.route('/api/kpis/<kpi_id>', methods=['POST'])
+def update_kpi_summary(kpi_id):
+    summary = request.json.get('summary')
+    results_file = r"C:\Sebastian\Projects\Morgen Stanley\readPDF\readPDFApp\kpis\results.json"
+    
+    with open(results_file, 'r') as rf:
+        results = json.load(rf)
+    
+    if kpi_id in results:
+        results[kpi_id]['summary'] = summary
+        with open(results_file, 'w') as wf:
+            json.dump(results, wf, indent=4)
+        return jsonify({'message': 'Summary updated successfully'}), 200
+    else:
+        return jsonify({'message': 'KPI not found'}), 404
 
 @app.route('/api/pdfs/<filename>', methods=['GET'])
 def get_pdf(filename):

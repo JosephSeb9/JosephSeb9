@@ -2,6 +2,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Document, Page } from 'react-pdf';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEdit } from '@fortawesome/free-solid-svg-icons';
+import './App.css'; // Ensure you are importing the App.css file
 
 const ReviewPage = () => {
   const [kpis, setKpis] = useState([]);
@@ -10,6 +13,8 @@ const ReviewPage = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pdfError, setPdfError] = useState(null);
   const [scale, setScale] = useState(1.0);
+  const [editingKpi, setEditingKpi] = useState(null);
+  const [summaryContent, setSummaryContent] = useState('');
   const pdfViewerRef = useRef(null);
 
   useEffect(() => {
@@ -31,6 +36,26 @@ const ReviewPage = () => {
     fitToScreen(); // Apply fit to screen when a KPI is selected
   };
 
+  const handleEditClick = (kpi) => {
+    setEditingKpi(kpi.kpi_id);
+    setSummaryContent(kpi.summary);
+  };
+
+  const handleSummaryChange = (event) => {
+    setSummaryContent(event.target.value);
+  };
+
+  const handleSummarySave = () => {
+    axios.post(`/api/kpis/${editingKpi}`, { summary: summaryContent })
+      .then(response => {
+        setKpis(kpis.map(kpi => kpi.kpi_id === editingKpi ? { ...kpi, summary: summaryContent } : kpi));
+        setEditingKpi(null);
+      })
+      .catch(error => {
+        console.error('Error saving summary:', error);
+      });
+  };
+
   const zoomIn = () => {
     setScale(scale + 0.2);
   };
@@ -42,7 +67,7 @@ const ReviewPage = () => {
   const fitToScreen = () => {
     if (pdfViewerRef.current) {
       const containerWidth = pdfViewerRef.current.clientWidth;
-      const pageWidth = 595.28*4; // Default width of an A4 page in points
+      const pageWidth = 595.28 * 4; // Default width of an A4 page in points
       const scaleX = containerWidth / pageWidth;
       setScale(scaleX);
     }
@@ -80,10 +105,30 @@ const ReviewPage = () => {
           {kpis.map(kpi => (
             <div
               key={kpi.kpi_id}
-              onClick={() => handleKpiClick(kpi)}
-              className={selectedKpi === kpi.kpi_id ? 'selected' : 'not-selected'}
+              className={`kpi-item ${selectedKpi === kpi.kpi_id ? 'selected' : 'not-selected'}`}
             >
-              {kpi.name}
+              <div className="kpi-left">
+                <span>{kpi.name}</span>
+                <button onClick={() => handleKpiClick(kpi)}>
+                  <FontAwesomeIcon icon={faEye} />
+                </button>
+              </div>
+              <div className="kpi-right">
+                <button onClick={() => handleEditClick(kpi)}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </button>
+              </div>
+              {editingKpi === kpi.kpi_id && (
+                <div className="kpi-edit">
+                  <textarea 
+                    value={summaryContent} 
+                    onChange={handleSummaryChange} 
+                    style={{ height: 'auto' }}
+                    rows={Math.max(3, summaryContent.split('\n').length)}
+                  />
+                  <button onClick={handleSummarySave}>Save</button>
+                </div>
+              )}
             </div>
           ))}
         </div>

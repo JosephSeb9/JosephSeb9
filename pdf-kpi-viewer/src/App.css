@@ -72,47 +72,109 @@
   background-color: #f9f9f9;
 }
 
-.kpi-list div {
+.kpi-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 15px;
   cursor: pointer;
   border-bottom: 1px solid #ccc;
   font-size: 18px;
   font-weight: bold;
   transition: background-color 0.3s, color 0.3s;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
-.kpi-list div:nth-child(1) {
-  background-color: #4caf50; /* Green */
-  color: #fff;
+.kpi-item:nth-child(1) {
+  background-color: #2e7d32; /* Dark Green */
+  color: white;
 }
 
-.kpi-list div:nth-child(2) {
-  background-color: #ffeb3b; /* Yellow */
-  color: #000;
+.kpi-item:nth-child(2) {
+  background-color: #f9a825; /* Dark Yellow */
+  color: black;
 }
 
-.kpi-list div:nth-child(3) {
-  background-color: #2196f3; /* Blue */
-  color: #fff;
+.kpi-item:nth-child(3) {
+  background-color: #1565c0; /* Dark Blue */
+  color: white;
 }
 
-.kpi-list div:nth-child(4) {
-  background-color: #ff5722; /* Orange */
-  color: #fff;
+.kpi-item:nth-child(4) {
+  background-color: #d32f2f; /* Dark Red */
+  color: white;
 }
 
-.kpi-list div:nth-child(5) {
-  background-color: #9c27b0; /* Purple */
-  color: #fff;
+.kpi-item:nth-child(5) {
+  background-color: #6a1b9a; /* Dark Purple */
+  color: white;
 }
 
-.kpi-list div:hover {
-  background-color: inherit; /* Keep the original background color */
-  color: inherit; /* Keep the original font color */
+.kpi-item:hover {
+  background-color: #555; /* Darker background on hover */
 }
 
-.kpi-list div:active {
-  background-color: inherit; /* Keep the original background color */
+.kpi-left {
+  display: flex;
+  align-items: center;
+}
+
+.kpi-left span {
+  margin-right: 10px;
+}
+
+.kpi-right {
+  display: flex;
+  align-items: center;
+}
+
+.kpi-right button {
+  margin-left: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.kpi-right button:hover {
+  background-color: #0056b3;
+}
+
+.kpi-edit {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.kpi-edit textarea {
+  width: 100%;
+  min-height: 50px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+  overflow: hidden;
+  text-align: center;
+}
+
+.kpi-edit button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.kpi-edit button:hover {
+  background-color: #218838;
 }
 
 .kpi-list .selected {
@@ -141,4 +203,13 @@
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.pdf-controls button:hover {
+  background-color: #0056b3;
 }
